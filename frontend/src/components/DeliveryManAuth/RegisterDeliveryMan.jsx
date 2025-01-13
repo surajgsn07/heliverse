@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "../../axiosConfig/axiosConfig";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterDeliveryPerson = () => {
   const [name, setName] = useState("");
@@ -11,6 +11,7 @@ const RegisterDeliveryPerson = () => {
   const [pantries, setPantries] = useState([]);
   const [selectedPantry, setSelectedPantry] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate()
 
   // Fetch all pantries when the component mounts
   useEffect(() => {
@@ -38,7 +39,7 @@ const RegisterDeliveryPerson = () => {
         pantry: selectedPantry,
       });
       if(response.data){
-          
+        navigate('/delivery-login')
         console.log("data :", response.data.message)
       }
       setMessage(response.data.message);

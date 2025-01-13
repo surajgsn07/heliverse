@@ -12,6 +12,7 @@ const RegisterPantry = () => {
     contactInfo: '',
     location: '',
   });
+  // const navigate = useNavigate()
   
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ const RegisterPantry = () => {
     try {
       const response = await axiosInstance.post('/pantry', formData);
       if(response.data){
-        console.log("data : " , response.data)
+        navigate('/pantry-login');
+        
       }
       
     } catch (err) {

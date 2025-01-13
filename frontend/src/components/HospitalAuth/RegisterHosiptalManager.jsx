@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../axiosConfig/axiosConfig";
 import { setCookie } from "../../axiosConfig/cookieFunc";
 
@@ -16,6 +16,7 @@ const Register = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
   
 
   const handleChange = (e) => {
@@ -34,7 +35,8 @@ const Register = () => {
     try {
       const response = await axiosInstance.post("/hospitalManager/register", formData);
       if(response.data){
-        alert("Registration successful");
+        navigate('/manager-login');
+        
         console.log("data :" , response.data)
       }
       //t to login page after successful registration
