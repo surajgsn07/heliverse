@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const UpdateProfile = () => {
-  const [patientData, setPatientData] = useState({
+  const user = useSelector((state) => state.auth.user);
+  const [patientData, setPatientData] = useState(user || {
     name: '',
     email: '',
     age: '',
@@ -186,7 +188,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="allergies"
-            value={patientData.allergies.join(', ')}
+            value={patientData.allergies?.join(', ')}
             onChange={(e) => handleArrayChange(e, 'allergies')}
             className="w-full px-4 py-2 border border-gray-300 rounded"
           />

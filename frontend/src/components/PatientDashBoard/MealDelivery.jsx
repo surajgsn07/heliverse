@@ -46,8 +46,9 @@ const MealDeliveryHistory = () => {
                   )}
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold">{meal.mealName}</h3>
-                  <p className="text-sm text-gray-600">{meal.deliveryDate}</p>
+                  <h3 className="text-xl font-semibold">{meal?.dietChartId[meal.shift.toLowerCase()]?.meal}</h3>
+                  <p className="text-sm text-gray-600">{meal.timestamps}</p>
+                  <p className="text-sm text-gray-600">{meal.shift}</p>
                 </div>
               </div>
               <div>
