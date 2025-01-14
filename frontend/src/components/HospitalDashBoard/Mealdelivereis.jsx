@@ -4,28 +4,31 @@ import axiosInstance from '../../axiosConfig/axiosConfig';
 
 const MealDeliveries = () => {
   const [mealDeliveries, setMealDeliveries] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchMealDeliveries = async () => {
-      setLoading(true);
-      setError(false);
       try {
         const response = await axiosInstance.get('/mealDelivery/all');
         if (response.data) {
           console.log(response.data.data);
           setMealDeliveries(response.data.data);
         }
-      } catch (error) {
-        console.error('Error fetching meal deliveries:', error);
+        setError(false);
+      } catch (err) {
+        console.error('Error fetching meal deliveries:', err);
         setError(true);
-      } finally {
-        setLoading(false);
       }
     };
 
+    // Fetch data initially
     fetchMealDeliveries();
+
+    // Set up polling
+    const intervalId = setInterval(fetchMealDeliveries, 30000); // Poll every 30 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
   }, []);
 
   if (loading) {
@@ -48,7 +51,16 @@ const MealDeliveries = () => {
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-8">
-      <h2 className="text-4xl font-extrabold text-gray-900 mb-6">Meal Deliveries</h2>
+      {/* Live Indicator */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-4xl font-extrabold text-gray-900">Meal Deliveries</h2>
+        <div className="flex items-center bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold text-sm">
+          <span className="animate-pulse mr-2 w-2 h-2 bg-green-500 rounded-full"></span>
+          Live (Real-time updates)
+        </div>
+      </div>
+
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto bg-white rounded-lg shadow-md border border-gray-200">
           <thead className="bg-blue-600 text-white">

@@ -37,7 +37,6 @@ const LoginPantry = () => {
           dispatch(login({ user: response.data.data.user, type: "Pantry" }));
           navigate('/pantry/dashboard');
 
-
       }
     } catch (err) {
       setError(err.response.data.message);
